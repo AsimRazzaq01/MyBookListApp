@@ -4,12 +4,23 @@ import kotlin.String.*
 
 class BookRepository {
 
-    private var appName = String ;
-    private var appDeveloper = String ;
-    private var appVersion = String ;
+    /**
+     * initializing member variables
+     */
+    private var appName : String = "";
+    private var appDeveloper : String = "";
+    private var appVersion : String = "";
     private var bookList: MutableList<Book> = mutableListOf()
 
+    /**
+     * init - adding data to member variables
+     */
     init {
+        appName = "Book App"
+        appDeveloper = "Asim Razzaq"
+        appVersion = "1.0"
+
+        // Hardcode of Book instances
         bookList.addAll(
             listOf(
                 Book("Joy Buolamwini Biography: Championing Humanity in the Age of AI", "Biography", 16.96),
@@ -25,23 +36,27 @@ class BookRepository {
         )
     }
 
-    fun getAppName() {
-        appName
+
+    /**
+     * methods to return data variables
+     */
+    fun getAppName(): String {
+        return appName
     }
-    fun getAppDeveloperName(){
-        appDeveloper
+    fun getAppDeveloperName(): String {
+        return appDeveloper
     }
-    fun getAppVersion(){
-        appVersion
+    fun getAppVersion(): String {
+        return appVersion
     }
-    fun getBooks(){
-        bookList
+    fun getBooks(): List<Book>{
+        return bookList
     }
-    fun getAveragePrice(){
-        bookList.map { it.price }.average()
+    fun getAveragePrice(): Double{
+        return  bookList.map { it.price }.average()
     }
-    fun getGenreAveragePrice(genre: String){
-        bookList.filter { it.genre == genre }.map { it.price }.average()
+    fun getGenreAveragePrice(genre: String): Double{
+        return bookList.filter { it.genre == genre }.map { it.price }.average()
     }
 
 

@@ -21,7 +21,7 @@ class MainActivity : ComponentActivity() {
             MyBookListAppTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
 
-                        //modifier = Modifier.padding(innerPadding)
+                        Nav(Modifier.padding(innerPadding))
 
                 }
             }
