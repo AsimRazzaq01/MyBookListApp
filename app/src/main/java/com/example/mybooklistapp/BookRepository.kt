@@ -3,7 +3,6 @@ package com.example.mybooklistapp
 import kotlin.String.*
 
 class BookRepository {
-
     /**
      * initializing member variables
      */
@@ -36,7 +35,6 @@ class BookRepository {
         )
     }
 
-
     /**
      * methods to return data variables
      */
@@ -58,8 +56,5 @@ class BookRepository {
     fun getGenreAveragePrice(genre: String): Double{
         return bookList.filter { it.genre == genre }.map { it.price }.average()
     }
-
-
-
-
-}
+    
+}   // End BookRepository

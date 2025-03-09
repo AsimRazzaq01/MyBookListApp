@@ -1,5 +1,5 @@
 package com.example.mybooklistapp
-
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,6 +11,10 @@ import androidx.compose.material3.AlertDialogDefaults.shape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -18,20 +22,30 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.compose.material3.Text as Text
 
+// view model
+class BooklistViewModel(private val bookRepository: BookRepository) : ViewModel(){
+
+    val books = bookRepository.getBooks()
+//    val appName = bookRepository.getAppName()
+}
+
+
+
+@SuppressLint("UnrememberedMutableState")
 @Composable
 fun Booklistscreen(navController: NavHostController,modifier: Modifier = Modifier){
-    val bookRepository = BookRepository() // Initialize
-    val books = bookRepository.getBooks() // Get the book list
+    // viewmodel instance
+    val viewModel = viewModel{BooklistViewModel(BookRepository())}
 
     // regular column used for the outside of page
     Column {
 
         // call to function for top screen buttons to switch the pages
-        topScreen(navController,modifier)
-
+        TopScreen(navController,modifier)
 
         // surface for the bottom of screen Book List
         Surface(modifier = Modifier.padding(40.dp) .fillMaxWidth(), shape = RoundedCornerShape(10.dp),
@@ -40,14 +54,14 @@ fun Booklistscreen(navController: NavHostController,modifier: Modifier = Modifie
             LazyColumn(modifier = Modifier.padding(20.dp)) {
 
                 item {
-                    Text(text = bookRepository.getAppName(), fontSize = 30.sp, color = Color.Blue, fontWeight = FontWeight.Bold)
+                    Text(text = "Book List", fontSize = 30.sp, color = Color.Blue, fontWeight = FontWeight.Bold)
+                    //viewModel.appName
                 }
 
-                items(books)    {book ->
+                items(viewModel.books)    {book ->
                     Text(text = book.title, fontSize = 15.sp, color = Color.Blue)
                     Text(text = book.genre, fontSize = 15.sp, color = Color.Magenta)
                     Text(text = "${book.price} \n", fontSize = 15.sp, color = Color.Magenta)
-
                 }
 
             }   // End Lazy Column
@@ -61,7 +75,7 @@ fun Booklistscreen(navController: NavHostController,modifier: Modifier = Modifie
  * to be inserted at the top of first page
  */
 @Composable
-fun topScreen(navController: NavHostController,modifier: Modifier = Modifier){
+fun TopScreen(navController: NavHostController,modifier: Modifier = Modifier){
     val context = LocalContext.current
     // first surface
     Surface(modifier = Modifier.padding(40.dp) .fillMaxWidth(), shape = RoundedCornerShape(10.dp),

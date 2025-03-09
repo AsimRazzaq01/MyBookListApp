@@ -15,11 +15,22 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+
+// view model
+class AppInfoViewModel(private val bookRepository: BookRepository) : ViewModel(){
+    val books = bookRepository.getBooks()
+    val appName = bookRepository.getAppName()
+    val appDeveloperName = bookRepository.getAppDeveloperName()
+    val appVersion = bookRepository.getAppVersion()
+}
 
 @Composable
 fun AppInfoscreen(navController: NavHostController, modifier: Modifier ) {
-    val bookRepository = BookRepository() // Initialize
+    // viewmodel instance
+    val viewModel = viewModel{AppInfoViewModel(BookRepository())}
 
     // surface for the bottom of screen Book List
     Surface(
@@ -36,20 +47,18 @@ fun AppInfoscreen(navController: NavHostController, modifier: Modifier ) {
 
             item{
                 Text(
-                    text = "Name:  ${bookRepository.getAppName()}", fontSize = 15.sp, color = Color.Magenta)
+                    text = "Name:  ${viewModel.appName}", fontSize = 15.sp, color = Color.Magenta)
             }
 
             item{
                 Text(
-                    text = "Developer:  ${bookRepository.getAppDeveloperName()}", fontSize = 15.sp, color = Color.Magenta)
+                    text = "Developer:  ${viewModel.appDeveloperName}", fontSize = 15.sp, color = Color.Magenta)
             }
 
             item{
                 Text(
-                    text = "Version:  ${bookRepository.getAppVersion()}", fontSize = 15.sp, color = Color.Magenta)
+                    text = "Version:  ${viewModel.appVersion}", fontSize = 15.sp, color = Color.Magenta)
             }
-
-
 
         }   // End lazy Column
     }   // End Surface

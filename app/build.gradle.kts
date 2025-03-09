@@ -44,6 +44,11 @@ dependencies {
     // add gradle dependency
     implementation("androidx.navigation:navigation-compose:2.8.5")
 
+    var lifecycle_version = "2.6.2"
+    // ViewModel
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycle_version")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
